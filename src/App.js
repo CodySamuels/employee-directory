@@ -3,20 +3,22 @@ import axios from "axios"
 import './App.css';
 
 
-function EmployeeCard({ img, name, phone }) {
+function EmployeeCard({ img, name, phone, email }) {
 
   return (
     <>
       <div>
         <img src={img} alt={name.first} />
         <div>
-          <p>{`${name.title} ${name.first} ${name.last}`}</p>
+          <p>{`${name.first} ${name.last}`}</p>
           <p>{phone}</p>
+          <p>{email}</p>
         </div>
       </div>
     </>
   )
 }
+
 
 const styles={
   employeeContainer:{
@@ -51,6 +53,16 @@ class App extends Component {
       console.log("Error:", e)
     }
   }
+  
+  filterEmployees = () => {
+    return this.state.users.filter((user) => user.gender==="female").map((user) => <EmployeeCard
+    key={user.id.value}
+    img={user.picture.large}
+    name={user.name}
+    phone={user.phone}
+    email={user.email}
+  />);
+  }
 
   renderEmployees = () => {
     return this.state.users.map(user => <EmployeeCard
@@ -58,6 +70,7 @@ class App extends Component {
       img={user.picture.large}
       name={user.name}
       phone={user.phone}
+      email={user.email}
     />);
   }
 
