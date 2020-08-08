@@ -22,7 +22,7 @@ const styles={
   employeeContainer:{
     display:"flex",
     flexWrap: "wrap",
-    jsutifyContent: "center"
+    justifyContent: "center"
   }
 }
 
