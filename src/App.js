@@ -54,14 +54,29 @@ class App extends Component {
     }
   }
   
-  filterEmployees = () => {
-    return this.state.users.filter((user) => user.gender==="female").map((user) => <EmployeeCard
-    key={user.id.value}
-    img={user.picture.large}
-    name={user.name}
-    phone={user.phone}
-    email={user.email}
-  />);
+  sortEmployeesAlphabetical = () => {
+    const usersCopy = [...this.state.users]
+    const sortedUsers = usersCopy.sort((a, b) => {
+      if (a.name.last < b.name.last) {
+        return -1
+      } else {
+        return 1
+      }
+    })
+    this.setState({users: sortedUsers})
+  }
+
+
+  filterFemaleEmployees = () => {
+    const usersCopy = [...this.state.users]
+    const filteredUsers = usersCopy.filter((user) => user.gender==="female")
+    this.setState({users:filteredUsers})
+  }
+
+  filterMaleEmployees = () => {
+    const usersCopy = [...this.state.users]
+    const filteredUsers = usersCopy.filter((user) => user.gender==="male")
+    this.setState({users:filteredUsers})
   }
 
   renderEmployees = () => {
@@ -92,7 +107,9 @@ class App extends Component {
           />
         </label>
         <button disabled={isNumberEntered} onClick={this.makeRequest} className="btn btn-primary">{isNumberEntered ? "Please Enter a Number" : "Submit"}</button>
-
+        <button onClick={this.filterFemaleEmployees} className="btn btn-primary">Female Employees</button>
+        <button onClick={this.filterMaleEmployees} className="btn btn-primary">Male Employees</button>
+        <button onClick={this.sortEmployeesAlphabetical} className="btn btn-primary">Alphabetical</button>
         <div style={styles.employeeContainer}>
           {this.renderEmployees()}
         </div>
