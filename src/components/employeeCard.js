@@ -6,7 +6,7 @@ function EmployeeCard({ img, name, phone, email }) {
     return (
       <>
         <div>
-          <img src={img} alt={name.first} />
+          <img style={{padding:"5rem", paddingBottom:"0px",}} src={img} alt={name.first} />
           <div>
             <p>{`${name.first} ${name.last}`}</p>
             <p>{phone}</p>

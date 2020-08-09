@@ -4,9 +4,9 @@ import './App.css';
 import EmployeeCard from "./components/employeeCard"
 import Button from "./components/button"
 
-const styles={
-  employeeContainer:{
-    display:"flex",
+const styles = {
+  employeeContainer: {
+    display: "flex",
     flexWrap: "wrap",
     justifyContent: "center"
   }
@@ -20,28 +20,34 @@ class App extends Component {
     filteredUsers: []
   }
 
+  componentDidMount() {
+    this.makeRequest();
+  }
+
   handleInputChange = e => {
     const { name, value } = e.target
     this.setState({ [name]: value })
   }
 
   makeRequest = async () => {
-    const URL = `https://randomuser.me/api/?results=${this.state.numInput}&nat=us`
+    const URL = `https://randomuser.me/api/?results=20&nat=us`
 
     try {
       let results = await axios.get(URL)
 
-      this.setState({ 
+      this.setState({
         users: results.data.results,
         filteredUsers: results.data.results
-       })
+      })
 
       console.log(results)
     } catch (e) {
       console.log("Error:", e)
     }
   }
-  
+
+
+
   sortEmployeesAlphabetical = () => {
     const usersCopy = [...this.state.users]
     const sortedUsers = usersCopy.sort((a, b) => {
@@ -51,20 +57,19 @@ class App extends Component {
         return 1
       }
     })
-    this.setState({filteredUsers: sortedUsers})
+    this.setState({ filteredUsers: sortedUsers })
   }
-
 
   filterFemaleEmployees = () => {
     const usersCopy = [...this.state.users]
-    const filteredUsers = usersCopy.filter((user) => user.gender==="female")
-    this.setState({filteredUsers:filteredUsers})
+    const filteredUsers = usersCopy.filter((user) => user.gender === "female")
+    this.setState({ filteredUsers: filteredUsers })
   }
 
   filterMaleEmployees = () => {
     const usersCopy = [...this.state.users]
-    const filteredUsers = usersCopy.filter((user) => user.gender==="male")
-    this.setState({filteredUsers:filteredUsers})
+    const filteredUsers = usersCopy.filter((user) => user.gender === "male")
+    this.setState({ filteredUsers: filteredUsers })
   }
 
   renderEmployees = () => {
@@ -78,26 +83,13 @@ class App extends Component {
   }
 
   render() {
-
-    const isNumberEntered = this.state.numInput === 0
-
     return (
       <div className="App">
-        <h1>Sabre International</h1>
-        <label htmlFor="numInput"># of Employees
-      <input
-            id="numInput"
-            name="numInput"
-            type="number"
-            value={this.state.numInput}
-            min="0"
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <Button  disabledBy={isNumberEntered} onHandleClick={this.makeRequest} title={isNumberEntered ? "Please Enter a Number" : "Submit"}/>
-        <Button onHandleClick={this.filterFemaleEmployees} title={"Female Employees"}/>
-        <Button onHandleClick={this.filterMaleEmployees} title={"Male Employees"}/>
-        <Button onHandleClick={this.sortEmployeesAlphabetical} title={"Alphabetical"}/>
+        <h1>Corsair Unlimited</h1>
+
+        <Button onHandleClick={this.filterFemaleEmployees} title={"Female Employees"} />
+        <Button onHandleClick={this.filterMaleEmployees} title={"Male Employees"} />
+        <Button onHandleClick={this.sortEmployeesAlphabetical} title={"Alphabetical"} />
         <div style={styles.employeeContainer}>
           {this.renderEmployees()}
         </div>
