@@ -1,24 +1,8 @@
 import React, { Component } from 'react';
 import axios from "axios"
 import './App.css';
-
-
-function EmployeeCard({ img, name, phone, email }) {
-
-  return (
-    <>
-      <div>
-        <img src={img} alt={name.first} />
-        <div>
-          <p>{`${name.first} ${name.last}`}</p>
-          <p>{phone}</p>
-          <p>{email}</p>
-        </div>
-      </div>
-    </>
-  )
-}
-
+import EmployeeCard from "./components/employeeCard"
+import Button from "./components/button"
 
 const styles={
   employeeContainer:{
@@ -32,7 +16,8 @@ class App extends Component {
 
   state = {
     numInput: 0,
-    users: []
+    users: [],
+    filteredUsers: []
   }
 
   handleInputChange = e => {
@@ -46,7 +31,10 @@ class App extends Component {
     try {
       let results = await axios.get(URL)
 
-      this.setState({ users: results.data.results })
+      this.setState({ 
+        users: results.data.results,
+        filteredUsers: results.data.results
+       })
 
       console.log(results)
     } catch (e) {
@@ -63,24 +51,24 @@ class App extends Component {
         return 1
       }
     })
-    this.setState({users: sortedUsers})
+    this.setState({filteredUsers: sortedUsers})
   }
 
 
   filterFemaleEmployees = () => {
     const usersCopy = [...this.state.users]
     const filteredUsers = usersCopy.filter((user) => user.gender==="female")
-    this.setState({users:filteredUsers})
+    this.setState({filteredUsers:filteredUsers})
   }
 
   filterMaleEmployees = () => {
     const usersCopy = [...this.state.users]
     const filteredUsers = usersCopy.filter((user) => user.gender==="male")
-    this.setState({users:filteredUsers})
+    this.setState({filteredUsers:filteredUsers})
   }
 
   renderEmployees = () => {
-    return this.state.users.map(user => <EmployeeCard
+    return this.state.filteredUsers.map(user => <EmployeeCard
       key={user.id.value}
       img={user.picture.large}
       name={user.name}
@@ -106,10 +94,10 @@ class App extends Component {
             onChange={this.handleInputChange}
           />
         </label>
-        <button disabled={isNumberEntered} onClick={this.makeRequest} className="btn btn-primary">{isNumberEntered ? "Please Enter a Number" : "Submit"}</button>
-        <button onClick={this.filterFemaleEmployees} className="btn btn-primary">Female Employees</button>
-        <button onClick={this.filterMaleEmployees} className="btn btn-primary">Male Employees</button>
-        <button onClick={this.sortEmployeesAlphabetical} className="btn btn-primary">Alphabetical</button>
+        <Button  disabledBy={isNumberEntered} onHandleClick={this.makeRequest} title={isNumberEntered ? "Please Enter a Number" : "Submit"}/>
+        <Button onHandleClick={this.filterFemaleEmployees} title={"Female Employees"}/>
+        <Button onHandleClick={this.filterMaleEmployees} title={"Male Employees"}/>
+        <Button onHandleClick={this.sortEmployeesAlphabetical} title={"Alphabetical"}/>
         <div style={styles.employeeContainer}>
           {this.renderEmployees()}
         </div>
