@@ -8,14 +8,14 @@ const styles = {
   employeeContainer: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "center"
+    justifyContent: "center",
   }
 }
 
 class App extends Component {
 
   state = {
-    numInput: 0,
+    searchField: '',
     users: [],
     filteredUsers: []
   }
@@ -45,8 +45,6 @@ class App extends Component {
       console.log("Error:", e)
     }
   }
-
-
 
   sortEmployeesAlphabetical = () => {
     const usersCopy = [...this.state.users]
@@ -83,10 +81,13 @@ class App extends Component {
   }
 
   render() {
+    // const { filteredUsers, searchField } = this.state 
+    // const searchedEmployees = filteredUsers.filter(user => user.name.toLowerCase().includes(searchField.toLowerCase()))
     return (
       <div className="App">
         <h1>Corsair Unlimited</h1>
-
+        <input type='search' placeholder='search employees' onChange={e =>this.setState({ searchField: e.target.value})}/>
+        <br />
         <Button onHandleClick={this.filterFemaleEmployees} title={"Female Employees"} />
         <Button onHandleClick={this.filterMaleEmployees} title={"Male Employees"} />
         <Button onHandleClick={this.sortEmployeesAlphabetical} title={"Alphabetical"} />
