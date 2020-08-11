@@ -74,12 +74,6 @@ class App extends Component {
     this.setState({ filteredUsers: filteredUsers })
   }
 
-  handleInputChange = (e) => {
-    e.preventDefault();
-    let usersCopy = [...this.state.users]
-    this.setState({ searchField: e.target.value, filteredUsers: usersCopy.filter(user => (user.name.first.includes(e.target.value) || user.name.last.includes(e.target.value))) })
-  }
-
   renderEmployees = () => {
     return this.state.filteredUsers.map(user => <EmployeeCard
       key={user.id.value}
@@ -95,6 +89,7 @@ class App extends Component {
     return (
       <div className='App'>
         <Jumbotron />
+
         <div>
 
           <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange} />
@@ -106,9 +101,11 @@ class App extends Component {
           <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Alphabetical'} />
 
         </div>
+        
         <div style={styles.employeeContainer}>
           {this.renderEmployees()}
         </div>
+
       </div>
     );
   }
