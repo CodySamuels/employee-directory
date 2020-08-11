@@ -31,7 +31,10 @@ class App extends Component {
     event.preventDefault();
     let usersCopy = [...this.state.users]
     this.setState({
-      searchField: event.target.value, filteredUsers: usersCopy.filter(user => (user.name.first.toLowerCase().includes(event.target.value.toLowerCase()) || user.name.last.toLowerCase().includes(event.target.value.toLowerCase())
+      searchField: event.target.value, filteredUsers: usersCopy.filter(user => (
+      user.name.first.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      user.name.last.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      user.name.fullName.toLowerCase().includes(event.target.value.toLowerCase())
       ))
     })
   }
@@ -41,6 +44,11 @@ class App extends Component {
 
     try {
       let results = await axios.get(URL)
+      results.data.results.map(user => {
+        const fullName = `${user.name.first} ${user.name.last}`
+        user.name.fullName = fullName
+        return user
+      })
 
       this.setState({
         users: results.data.results,
