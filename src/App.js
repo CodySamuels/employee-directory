@@ -30,7 +30,10 @@ class App extends Component {
   handleInputChange = (event) => {
     event.preventDefault();
     let usersCopy = [...this.state.users]
-    this.setState({ searchField: event.target.value, filteredUsers: usersCopy.filter(user => (user.name.first.toLowerCase().includes(event.target.value.toLowerCase()) || user.name.last.toLowerCase().includes(event.target.value.toLowerCase()))) })
+    this.setState({
+      searchField: event.target.value, filteredUsers: usersCopy.filter(user => (user.name.first.toLowerCase().includes(event.target.value.toLowerCase()) || user.name.last.toLowerCase().includes(event.target.value.toLowerCase())
+      ))
+    })
   }
 
   makeRequest = async () => {
@@ -44,7 +47,7 @@ class App extends Component {
         filteredUsers: results.data.results
       })
 
-      console.log(results)
+
     } catch (e) {
       console.log('Error:', e)
     }
@@ -94,19 +97,19 @@ class App extends Component {
         <Jumbotron />
 
         <div className="row d-flex justify-content-center">
-          <form className="form">
+          <form className="form-inline">
 
-          <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange} />
+            <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange} />
 
-          <Button onHandleClick={this.filterFemaleEmployees} title={'Filtery By Female Employees'} />
+            {/* <Button onHandleClick={this.filterFemaleEmployees} title={'Filtery by Women'} /> */}
 
-          <Button onHandleClick={this.filterMaleEmployees} title={'Filter By Male Employees'} />
+            {/* <Button onHandleClick={this.filterMaleEmployees} title={'Filter by Men'} /> */}
 
-          <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Sort By Alphabetical'} />
+            <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Sort By Alphabetical'} />
           </form>
 
         </div>
-        
+
         <div style={styles.employeeContainer}>
           {this.renderEmployees()}
         </div>
