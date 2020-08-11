@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import axios from "axios"
+import axios from 'axios'
 import './App.css';
-import EmployeeCard from "./components/employeeCard"
-import Button from "./components/button"
+import EmployeeCard from './components/employeeCard'
+import Button from './components/button'
+import Jumbotron from './components/jumbotron';
+import Searchbar from './components/searchbar';
+
 
 const styles = {
   employeeContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   }
 }
 
@@ -27,6 +30,7 @@ class App extends Component {
   handleInputChange = e => {
     const { name, value } = e.target
     this.setState({ [name]: value })
+
   }
 
   makeRequest = async () => {
@@ -42,7 +46,7 @@ class App extends Component {
 
       console.log(results)
     } catch (e) {
-      console.log("Error:", e)
+      console.log('Error:', e)
     }
   }
 
@@ -60,13 +64,13 @@ class App extends Component {
 
   filterFemaleEmployees = () => {
     const usersCopy = [...this.state.users]
-    const filteredUsers = usersCopy.filter((user) => user.gender === "female")
+    const filteredUsers = usersCopy.filter((user) => user.gender === 'female')
     this.setState({ filteredUsers: filteredUsers })
   }
 
   filterMaleEmployees = () => {
     const usersCopy = [...this.state.users]
-    const filteredUsers = usersCopy.filter((user) => user.gender === "male")
+    const filteredUsers = usersCopy.filter((user) => user.gender === 'male')
     this.setState({ filteredUsers: filteredUsers })
   }
 
@@ -81,16 +85,21 @@ class App extends Component {
   }
 
   render() {
-    // const { filteredUsers, searchField } = this.state 
-    // const searchedEmployees = filteredUsers.filter(user => user.name.toLowerCase().includes(searchField.toLowerCase()))
+
     return (
-      <div className="App">
-        <h1>Corsair Unlimited</h1>
-        <input type='search' placeholder='search employees' onChange={e =>this.setState({ searchField: e.target.value})}/>
-        <br />
-        <Button onHandleClick={this.filterFemaleEmployees} title={"Female Employees"} />
-        <Button onHandleClick={this.filterMaleEmployees} title={"Male Employees"} />
-        <Button onHandleClick={this.sortEmployeesAlphabetical} title={"Alphabetical"} />
+      <div className='App'>
+        <Jumbotron />
+        <div>
+
+        <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange}/>
+
+        <Button onHandleClick={this.filterFemaleEmployees} title={'Female Employees'} />
+
+        <Button onHandleClick={this.filterMaleEmployees} title={'Male Employees'} />
+
+        <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Alphabetical'} />
+
+        </div>
         <div style={styles.employeeContainer}>
           {this.renderEmployees()}
         </div>
