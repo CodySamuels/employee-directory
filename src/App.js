@@ -53,7 +53,7 @@ class App extends Component {
     }
   }
 
-  sortEmployeesAlphabetical = (event) => {
+  sortEmployeesLastAlphabetical = (event) => {
     event.preventDefault()
     const usersCopy = [...this.state.users]
     const sortedUsers = usersCopy.sort((a, b) => {
@@ -66,19 +66,19 @@ class App extends Component {
     this.setState({ filteredUsers: sortedUsers })
   }
 
-  filterFemaleEmployees = (event) => {
+  sortEmployeesFirstAlphabetical = (event) => {
     event.preventDefault()
     const usersCopy = [...this.state.users]
-    const filteredUsers = usersCopy.filter((user) => user.gender === 'female')
-    this.setState({ filteredUsers: filteredUsers })
+    const sortedUsers = usersCopy.sort((a, b) => {
+      if (a.name.first < b.name.first) {
+        return -1
+      } else {
+        return 1
+      }
+    })
+    this.setState({ filteredUsers: sortedUsers })
   }
 
-  filterMaleEmployees = (event) => {
-    event.preventDefault()
-    const usersCopy = [...this.state.users]
-    const filteredUsers = usersCopy.filter((user) => user.gender === 'male')
-    this.setState({ filteredUsers: filteredUsers })
-  }
 
   renderEmployees = () => {
     return this.state.filteredUsers.map(user => <EmployeeCard
@@ -100,12 +100,9 @@ class App extends Component {
           <form className="form-inline">
 
             <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange} />
-
-            {/* <Button onHandleClick={this.filterFemaleEmployees} title={'Filtery by Women'} /> */}
-
-            {/* <Button onHandleClick={this.filterMaleEmployees} title={'Filter by Men'} /> */}
-
-            <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Sort By Alphabetical'} />
+            <Button onHandleClick={this.sortEmployeesLastAlphabetical} title={'Sort Last Names Alphabetically'} />
+            <Button onHandleClick={this.sortEmployeesFirstAlphabetical} title={'Sort First Names Alphabetically'} />
+            
           </form>
 
         </div>
