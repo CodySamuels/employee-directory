@@ -100,8 +100,8 @@ class App extends Component {
           <form className="form-inline">
 
             <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange} />
-            <Button onHandleClick={this.sortEmployeesFirstAlphabetical} title={'Sort First Names Alphabetically'} />
-            <Button onHandleClick={this.sortEmployeesLastAlphabetical} title={'Sort Last Names Alphabetically'} />
+            <Button onHandleClick={this.sortEmployeesFirstAlphabetical} title={'Sort by First Name'} />
+            <Button onHandleClick={this.sortEmployeesLastAlphabetical} title={'Sort by Last Name'} />
 
           </form>
 
