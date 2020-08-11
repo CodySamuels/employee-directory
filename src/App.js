@@ -90,15 +90,17 @@ class App extends Component {
       <div className='App'>
         <Jumbotron />
 
-        <div>
+        <div className="row d-flex justify-content-center">
+          <form className="form">
 
           <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange} />
 
-          <Button onHandleClick={this.filterFemaleEmployees} title={'Female Employees'} />
+          <Button onHandleClick={this.filterFemaleEmployees} title={'Filtery By Female Employees'} />
 
-          <Button onHandleClick={this.filterMaleEmployees} title={'Male Employees'} />
+          <Button onHandleClick={this.filterMaleEmployees} title={'Filter By Male Employees'} />
 
-          <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Alphabetical'} />
+          <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Sort By Alphabetical'} />
+          </form>
 
         </div>
         
