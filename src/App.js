@@ -50,7 +50,8 @@ class App extends Component {
     }
   }
 
-  sortEmployeesAlphabetical = () => {
+  sortEmployeesAlphabetical = (event) => {
+    event.preventDefault()
     const usersCopy = [...this.state.users]
     const sortedUsers = usersCopy.sort((a, b) => {
       if (a.name.last < b.name.last) {
@@ -62,13 +63,15 @@ class App extends Component {
     this.setState({ filteredUsers: sortedUsers })
   }
 
-  filterFemaleEmployees = () => {
+  filterFemaleEmployees = (event) => {
+    event.preventDefault()
     const usersCopy = [...this.state.users]
     const filteredUsers = usersCopy.filter((user) => user.gender === 'female')
     this.setState({ filteredUsers: filteredUsers })
   }
 
-  filterMaleEmployees = () => {
+  filterMaleEmployees = (event) => {
+    event.preventDefault()
     const usersCopy = [...this.state.users]
     const filteredUsers = usersCopy.filter((user) => user.gender === 'male')
     this.setState({ filteredUsers: filteredUsers })
