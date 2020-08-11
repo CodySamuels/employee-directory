@@ -31,11 +31,7 @@ class App extends Component {
     event.preventDefault();
     let usersCopy = [...this.state.users]
     this.setState({
-      searchField: event.target.value, filteredUsers: usersCopy.filter(user => (
-      user.name.first.toLowerCase().includes(event.target.value.toLowerCase()) ||
-      user.name.last.toLowerCase().includes(event.target.value.toLowerCase()) ||
-      user.name.fullName.toLowerCase().includes(event.target.value.toLowerCase())
-      ))
+      searchField: event.target.value, filteredUsers: usersCopy.filter(user => (user.name.fullName.toLowerCase().includes(event.target.value.toLowerCase())))
     })
   }
 
@@ -105,7 +101,7 @@ class App extends Component {
         <Jumbotron />
 
         <div className="row d-flex justify-content-center">
-          <form className="form-inline">
+          <form className="form-inline d-flex-inline justify-content-center">
 
             <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange} />
             <Button onHandleClick={this.sortEmployeesFirstAlphabetical} title={'Sort by First Name'} />
