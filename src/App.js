@@ -27,10 +27,10 @@ class App extends Component {
     this.makeRequest();
   }
 
-  handleInputChange = e => {
-    const { name, value } = e.target
-    this.setState({ [name]: value })
-
+  handleInputChange = (event) => {
+    event.preventDefault();
+    let usersCopy = [...this.state.users]
+    this.setState({ searchField: event.target.value, filteredUsers: usersCopy.filter(user => (user.name.first.includes(event.target.value) || user.name.last.includes(event.target.value))) })
   }
 
   makeRequest = async () => {
@@ -74,6 +74,12 @@ class App extends Component {
     this.setState({ filteredUsers: filteredUsers })
   }
 
+  handleInputChange = (e) => {
+    e.preventDefault();
+    let usersCopy = [...this.state.users]
+    this.setState({ searchField: e.target.value, filteredUsers: usersCopy.filter(user => (user.name.first.includes(e.target.value) || user.name.last.includes(e.target.value))) })
+  }
+
   renderEmployees = () => {
     return this.state.filteredUsers.map(user => <EmployeeCard
       key={user.id.value}
@@ -91,13 +97,13 @@ class App extends Component {
         <Jumbotron />
         <div>
 
-        <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange}/>
+          <Searchbar search={this.state.searchField} handleInputChange={this.handleInputChange} />
 
-        <Button onHandleClick={this.filterFemaleEmployees} title={'Female Employees'} />
+          <Button onHandleClick={this.filterFemaleEmployees} title={'Female Employees'} />
 
-        <Button onHandleClick={this.filterMaleEmployees} title={'Male Employees'} />
+          <Button onHandleClick={this.filterMaleEmployees} title={'Male Employees'} />
 
-        <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Alphabetical'} />
+          <Button onHandleClick={this.sortEmployeesAlphabetical} title={'Alphabetical'} />
 
         </div>
         <div style={styles.employeeContainer}>
