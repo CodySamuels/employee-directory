@@ -24,13 +24,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.makeRequest();
+    this.makeRequest()
   }
 
   handleInputChange = (event) => {
     event.preventDefault();
     let usersCopy = [...this.state.users]
-    this.setState({ searchField: event.target.value, filteredUsers: usersCopy.filter(user => (user.name.first.includes(event.target.value) || user.name.last.includes(event.target.value))) })
+    this.setState({ searchField: event.target.value, filteredUsers: usersCopy.filter(user => (user.name.first.toLowerCase().includes(event.target.value.toLowerCase()) || user.name.last.toLowerCase().includes(event.target.value.toLowerCase()))) })
   }
 
   makeRequest = async () => {
